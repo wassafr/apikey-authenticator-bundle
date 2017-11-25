@@ -1,0 +1,12 @@
+services:
+    wassa_api_key_authenticator.authenticator:
+        class: Wassa\ApiKeyAuthenticatorBundle\Security\ApiKeyAuthenticator
+        arguments: [ "@service_container"]
+
+    wassa_api_key_authenticator.user_provider:
+        class: Wassa\ApiKeyAuthenticatorBundle\Security\ApiKeyUserProvider
+        arguments: ["@service_container"]
+
+    wassa_api_key_authenticator.random_generator:
+        class: Wassa\ApiKeyAuthenticatorBundle\Generator\RandomApiKeyGenerator
+        arguments: ["@service_container"]
