@@ -44,7 +44,7 @@ The bundle works without any special configuration. Add and edit the following b
 ```
 wassa_api_key_authenticator:
     role: 'ROLE_API'                                            # Role that will be assigned to authenticated requests
-    name: 'x-api-key'                                           # Name of the HTTP request header that must contain the API key
+    name: 'x-api-key'                                           # Name of the "field" that must contain the API key
     location: 'all'                                             # Where to look for the API key in the request
     generator: 'wassa_api_key_authenticator.random_generator'   # Generator to use to generate the API key
     key_size: 32                                                # Size of the generated API key
@@ -57,7 +57,7 @@ The `location` parameter specifies which "field" to look for the API key in the 
 * `headers`: look for an HTTP header
 * `query`: look for a query parameter
 * `body`: look for a POST data parameter
-* `path`: look in the path
+* `path`: look in the path (not implemented yet)
 * `all`: look for all above and returns the first found (in order above)
 
 `location` can be a combination of different values, for example `'headers&query'` to look in headers and query but not in the body.

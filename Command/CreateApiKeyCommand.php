@@ -8,7 +8,6 @@
 
 namespace Wassa\ApiKeyAuthenticatorBundle\Command;
 
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +19,7 @@ class CreateApiKeyCommand extends ContainerAwareCommand
 {
     public function configure()
     {
-        $this
+       $this
             ->setName('apikey-authenticator:create-key')
             ->addOption('size', 's', InputOption::VALUE_REQUIRED, 'Size of the API key')
             ->addArgument('apiKey', InputArgument::OPTIONAL, 'API key');

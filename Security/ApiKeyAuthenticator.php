@@ -31,11 +31,13 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
         $this->container = $container;
     }
 
-    /**
-     * Called on every request. Return whatever credentials you want to
-     * be passed to getUser(). Returning null will cause this authenticator
-     * to be skipped.
-     */
+    public function supports(Request $request)
+    {
+        $name = $this->container->getParameter('apikey_authenticator.name');
+
+        return $request->headers->has($name);
+    }
+
     public function getCredentials(Request $request)
     {
         // Check where we need to get the token from
@@ -116,9 +118,6 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
     {
         $data = array(
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-
-            // or to translate this message
-            // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
         );
 
         return new JsonResponse($data, Response::HTTP_FORBIDDEN);
@@ -148,9 +147,8 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
         $parts = explode('::', $method);
         $reader = new AnnotationReader();
         $reflectionMethod = new \ReflectionMethod($parts[0], $parts[1]);
-        print_r($reflectionMethod);
+
         if ($annotation = $reader->getMethodAnnotation($reflectionMethod, 'Wassa\ApiKeyAuthenticatorBundle\Annotation\ApiKeyAuthenticatorAnnotation')) {
-            print_r($annotation);
         }
     }
 }

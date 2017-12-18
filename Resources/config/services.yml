@@ -10,3 +10,8 @@ services:
     wassa_api_key_authenticator.random_generator:
         class: Wassa\ApiKeyAuthenticatorBundle\Generator\RandomApiKeyGenerator
         arguments: ["@service_container"]
+        public: true
+
+    wassa_api_key_authenticator.createkey_command:
+        class: Wassa\ApiKeyAuthenticatorBundle\Command\CreateApiKeyCommand
+        tags: [ console.command ]
