@@ -33,9 +33,7 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request)
     {
-        $name = $this->container->getParameter('apikey_authenticator.name');
-
-        return $request->headers->has($name);
+        return true;
     }
 
     public function getCredentials(Request $request)
@@ -61,17 +59,6 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
         // Try in request body
         if (($location & Configuration::LOCATION_BODY) == Configuration::LOCATION_BODY) {
             if (($token = $request->request->get($name))) {
-                return ['token' => $token];
-            }
-        }
-
-        // Try in the path
-        if (($location & Configuration::LOCATION_PATH) == Configuration::LOCATION_PATH) {
-            $this->getPathParameter($request);
-            // Remove all non alphanumeric characters from the field name and lower it
-            $name = strtolower(preg_replace("/[^A-Za-z0-9]/", "", $name));
-
-            if (($token = $request->attributes->get($name))) {
                 return ['token' => $token];
             }
         }
@@ -139,16 +126,5 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
     public function supportsRememberMe()
     {
         return false;
-    }
-
-    public function getPathParameter(Request $request)
-    {
-        $method = $request->attributes->get('_controller');
-        $parts = explode('::', $method);
-        $reader = new AnnotationReader();
-        $reflectionMethod = new \ReflectionMethod($parts[0], $parts[1]);
-
-        if ($annotation = $reader->getMethodAnnotation($reflectionMethod, 'Wassa\ApiKeyAuthenticatorBundle\Annotation\ApiKeyAuthenticatorAnnotation')) {
-        }
     }
 }

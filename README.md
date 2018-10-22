@@ -57,7 +57,6 @@ The `location` parameter specifies which "field" to look for the API key in the 
 * `headers`: look for an HTTP header
 * `query`: look for a query parameter
 * `body`: look for a POST data parameter
-* `path`: look in the path (not implemented yet)
 * `all`: look for all above and returns the first found (in order above)
 
 `location` can be a combination of different values, for example `'headers&query'` to look in headers and query but not in the body.
