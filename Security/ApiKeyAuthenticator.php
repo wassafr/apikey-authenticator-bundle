@@ -87,7 +87,7 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
         }
 
         // If the provided API key is not the same as the generated one, return null
-        if ($credentials['token'] != $user->getApiKey()) {
+        if (trim($credentials['token']) != trim($user->getApiKey())) {
             return null;
         }
 
